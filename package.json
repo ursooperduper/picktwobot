@@ -1,0 +1,16 @@
+{
+  "name": "picktwobot",
+  "version": "1.0.0",
+  "description": "A Twitter bot that reminds you that you can't have everything.",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "lodash": "^2.4.1",
+    "node-rest-client": "^1.4.1",
+    "twit": "^1.1.18",
+    "wordfilter": "^0.1.7"
+  }
+}
