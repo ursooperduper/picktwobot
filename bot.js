@@ -169,7 +169,7 @@ run = function() {
   });
 }
 
-/*
+
 setInterval(function() {
   try {
     run();
@@ -178,4 +178,4 @@ setInterval(function() {
     console.log(e);
   }
 }, 60000 * 60);
-*/
+
