@@ -18,7 +18,7 @@ var wordnikKey =        process.env.WORDNIK_API_KEY;
 app.get('/', function(req, res) {
   res.send('Hello world');
 });
-app.listen(3000);
+app.listen(process.env.PORT);
 
 getDummyTweet = function(cb) {
   var botData = {
