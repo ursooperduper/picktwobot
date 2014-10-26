@@ -3,6 +3,7 @@ var Client        = require('node-rest-client').Client;
 var Twit          = require('twit');
 var async         = require('async');
 var wordFilter    = require('wordfilter');
+var app           = require('express').createServer();
 
 var t = new Twit({
   consumer_key:         process.env.PICKTWOBOT_TWIT_CONSUMER_KEY,
@@ -12,6 +13,11 @@ var t = new Twit({
 });
 
 var wordnikKey =        process.env.WORDNIK_API_KEY;
+
+app.get('/', function(req, res) {
+  res.send('Hello world');
+});
+app.listen(3000);
 
 getDummyTweet = function(cb) {
   var botData = {
@@ -132,19 +138,30 @@ postTweet = function(botData, cb) {
   }
 }
 
-async.waterfall([
-  getPublicTweet, 
-  extractWordsFromTweet, 
-  getAllWordData, 
-  findNouns,
-  formatTweet,
-  postTweet
-],
-function(err, response) {
+run = function() {
+  async.waterfall([
+    getPublicTweet, 
+    extractWordsFromTweet, 
+    getAllWordData, 
+    findNouns,
+    formatTweet,
+    postTweet
+  ],
+  function(err, response) {
     if (err) {
       console.log('There was an error posting to Twitter: ', err);
       console.log('Response: ', response);
     } else {
       console.log('Tweet successful!');  
     }
-});
+  });
+}
+
+setInterval(function() {
+  try {
+    run();
+  }
+  catch (e) {
+    console.log(e);
+  }
+}, 60000*60);
