@@ -23,7 +23,7 @@ app.listen(process.env.PORT);
 
 getDummyTweet = function(cb) {
   var botData = {
-    tweet         : "You should probably keep an eye on that http://t.co/nbg6jDGUmN in the next hour...just saying...",
+    tweet         : 'You should probably keep an eye on that http://t.co/nbg6jDGUmN in the next hour...just saying...',
     tweetID       : '142423423',
     tweetUsername : 'testusername'
   };
@@ -31,7 +31,7 @@ getDummyTweet = function(cb) {
 }
 
 getPublicTweet = function(cb) {
-  t.get('search/tweets', {q: 'a', count: 1, result_type: 'recent'}, function(err, data, response) {
+  t.get('search/tweets', {q: 'a', count: 1, result_type: 'recent', lang: 'en'}, function(err, data, response) {
     if (!err) {
       var botData = {
         tweet           : data.statuses[0].text.toLowerCase(),
