@@ -34,7 +34,7 @@ getPublicTweet = function(cb) {
   t.get('search/tweets', {q: 'a', count: 1, result_type: 'recent', lang: 'en'}, function(err, data, response) {
     if (!err) {
       var botData = {
-        tweet           : data.statuses[0].text.toLowerCase(),
+        baseTweet       : data.statuses[0].text.toLowerCase(),
         tweetID         : data.statuses[0].id_str,
         tweetUsername   : data.statuses[0].user.screen_name
       };
@@ -48,12 +48,21 @@ getPublicTweet = function(cb) {
 
 extractWordsFromTweet = function(botData, cb) {
   var excludeNonAlpha       = /[^a-zA-Z]+/;
-  var tweet                 = botData.tweet;
-  botData.tweetWordList     = tweet.split(excludeNonAlpha);
+  var excludeURLs           = /https?:\/\/[-a-zA-Z0-9@:%_\+.~#?&\/=]+/g;
+  var excludeShortAlpha     = /\b[a-z][a-z]?\b/g;
+  var excludeHandles        = /@[a-z0-9_-]+/g;
+  var excludePatterns       = [excludeURLs, excludeShortAlpha, excludeHandles];
+  botData.tweet             = botData.baseTweet;
+
+  _.each(excludePatterns, function(pat) {
+    botData.tweet = botData.tweet.replace(pat, ' ');
+  });
+
+  botData.tweetWordList = botData.tweet.split(excludeNonAlpha);
   var excludedElements = [
-    'RT','MT','co','com','http','a','and','the','pick',
-    's','t','m','re','i','u','select','picking'
+    'and','the','pick','select','picking'
   ];
+  
   botData.tweetWordList = _.reject(botData.tweetWordList, function(w) {
     return _.contains(excludedElements, w);
   });
@@ -135,7 +144,7 @@ dummyPost = function(botData, cb) {
 postTweet = function(botData, cb) {
   if (!wordFilter.blacklisted(botData.tweetBlock)) {
     t.post('statuses/update', {status: botData.tweetBlock}, function(err, data, response) {
-      cb(err, response);
+      cb(err, botData);
     });
   }
 }
@@ -149,13 +158,14 @@ run = function() {
     formatTweet,
     postTweet
   ],
-  function(err, response) {
+  function(err, botData) {
     if (err) {
       console.log('There was an error posting to Twitter: ', err);
-      console.log('Response: ', response);
     } else {
       console.log('Tweet successful!');  
+      console.log('Tweet: ', botData.tweetBlock);
     }
+    console.log('Base tweet: ', botData.baseTweet);
   });
 }
 
