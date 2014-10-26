@@ -159,11 +159,11 @@ run = function() {
   });
 }
 
-//setInterval(function() {
-  //try {
-    //run();
-  //}
-  //catch (e) {
-    //console.log(e);
-  //}
-//}, 60000*60);
+setInterval(function() {
+  try {
+    run();
+  }
+  catch (e) {
+    console.log(e);
+  }
+}, 60000);
