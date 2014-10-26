@@ -3,7 +3,8 @@ var Client        = require('node-rest-client').Client;
 var Twit          = require('twit');
 var async         = require('async');
 var wordFilter    = require('wordfilter');
-var app           = require('express').createServer();
+var express       = require('express');
+var app           = express();
 
 var t = new Twit({
   consumer_key:         process.env.PICKTWOBOT_TWIT_CONSUMER_KEY,
