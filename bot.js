@@ -31,7 +31,7 @@ getDummyTweet = function(cb) {
 }
 
 getPublicTweet = function(cb) {
-  t.get('search/tweets', {q: 'the', count: 1, result_type: 'mixed'}, function(err, data, response) {
+  t.get('search/tweets', {q: 'a', count: 1, result_type: 'mixed'}, function(err, data, response) {
     if (!err) {
       var botData = {
         tweet           : data.statuses[0].text.toLowerCase(),
