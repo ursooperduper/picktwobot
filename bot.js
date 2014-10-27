@@ -15,11 +15,13 @@ var t = new Twit({
 
 var wordnikKey =        process.env.WORDNIK_API_KEY;
 
+/*
 app.get('/', function(req, res) {
   res.send('Hello world');
   run();
 });
 app.listen(process.env.PORT);
+*/
 
 getDummyTweet = function(cb) {
   var botData = {
