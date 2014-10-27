@@ -3,8 +3,6 @@ var Client        = require('node-rest-client').Client;
 var Twit          = require('twit');
 var async         = require('async');
 var wordFilter    = require('wordfilter');
-var express       = require('express');
-var app           = express();
 
 var t = new Twit({
   consumer_key:         process.env.PICKTWOBOT_TWIT_CONSUMER_KEY,
@@ -14,14 +12,6 @@ var t = new Twit({
 });
 
 var wordnikKey =        process.env.WORDNIK_API_KEY;
-
-/*
-app.get('/', function(req, res) {
-  res.send('Hello world');
-  run();
-});
-app.listen(process.env.PORT);
-*/
 
 getDummyTweet = function(cb) {
   var botData = {
