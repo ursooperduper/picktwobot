@@ -124,8 +124,7 @@ formatTweet = function(botData, cb) {
 
   var tweetLine1    = botData.pickTwoWordList.join(' ');
   var tweetLine2    = 'Pick Two.';
-  var tweetLine3    = 'http://twitter.com/' + botData.tweetUsername + '/status/' + botData.tweetID;
-  botData.tweetBlock = tweetLine1 + '\n' + tweetLine2 + '\n' + tweetLine3;
+  botData.tweetBlock = tweetLine1 + '\n' + tweetLine2;
   cb(null, botData);
 }
 
